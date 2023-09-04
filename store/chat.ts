@@ -79,7 +79,7 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
-  function delay(time) {
+  function delay(time: number) {
     return new Promise((resolve, reject) => {
       const isSuccess = Math.random() > 0.1
       if (isSuccess) {
@@ -109,6 +109,7 @@ export const useChatStore = defineStore('chat', () => {
         updateChatMessage(id, 'status', status.success)
       })
       .catch(() => {
+        console.log('failed')
         updateChatMessage(id, 'status', status.failed)
       })
   }

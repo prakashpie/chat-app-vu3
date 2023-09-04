@@ -1,10 +1,11 @@
 <template>
   <form ref="form" class="message-form" @submit.prevent="onSubmit">
     <div class="message-form__textarea-wrapper">
-      <textarea tabindex="0" v-bind="attributes" class="message-form__textarea" :value="modelValue" @input="onInput($event)" @blur="onBlur($event)" @focus="onFocus($event)" @keydown="onKeyDown"></textarea>
+      <textarea tabindex="0" :style="dynamicTextAreaHeight" v-bind="attributes" class="message-form__textarea" :value="modelValue" @input="onInput($event)" @blur="onBlur($event)" @focus="onFocus($event)" @keydown="onKeyDown"></textarea>
       <div class="message-form__send">
-        <button class="icon-button submit-button">
-          <svg class="icon-button__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" /></svg>
+        <button class="button submit-button">
+          <span class="lable"> Send </span>
+          <svg fill="#fff" class="icon-button__icon" xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="24"><path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" /></svg>
         </button>
       </div>
     </div>
@@ -53,7 +54,7 @@
 import { defineEmits, useAttrs, computed } from 'vue'
 const attrs = useAttrs()
 
-const { placeholder, name, rows, disabled, required, modelValue } = defineProps({
+const props = defineProps({
   placeholder: {
     type: String,
     default: '',
@@ -66,14 +67,43 @@ const { placeholder, name, rows, disabled, required, modelValue } = defineProps(
   modelValue: { type: [String, Number, Boolean, Array], default: '', required: true },
 })
 
+let textAreaEl = null
+const dynamicTextAreaHeight = ref({
+  maxHeight: '104px',
+  height: '56px',
+  overflowY: 'auto'
+})
+
+watch(
+    () => props.modelValue,
+    (newValue: string) => {
+      if(newValue) {
+        const style = window.getComputedStyle(textAreaEl);
+        const boxSizing = style.boxSizing === 'border-box'
+            ? parseInt(style.borderBottomWidth, 10) +
+            parseInt(style.borderTopWidth, 10)
+            : 0;
+        dynamicTextAreaHeight.value.height = ''
+        dynamicTextAreaHeight.value.height = (textAreaEl.scrollHeight + boxSizing) + 'px'
+      } else {
+        dynamicTextAreaHeight.value.height = ''
+        dynamicTextAreaHeight.value.maxHeight=  '104px'
+      }
+    }
+)
+
+onMounted(() => {
+  textAreaEl = document.querySelector('.message-form__textarea')
+})
+
 const attributes = computed(() => {
   return {
     ...attrs,
     name: name,
-    rows: rows,
-    disabled: disabled,
-    placeholder: placeholder,
-    required: required,
+    rows: props.rows,
+    disabled: props.disabled,
+    placeholder: props.placeholder,
+    required: props.required,
   }
 })
 
@@ -97,17 +127,16 @@ function onSubmit(e) {
 
 function onKeyDown(e) {
   // Get the code of pressed key
-  const keyCode = e.which || e.keyCode;
+  const keyCode = e.which || e.keyCode
 
   // 13 represents the Enter key
   if (keyCode === 13 && !e.shiftKey) {
     // Don't generate a new line
     const formSubmitEl: HTMLInputElement | null | undefined = document?.querySelector('.submit-button')
-    if(formSubmitEl) {
+    if (formSubmitEl) {
       formSubmitEl.click()
     }
-    e.preventDefault();
+    e.preventDefault()
   }
 }
-
 </script>

@@ -34,12 +34,20 @@ const { fetchConversation } = chatStore
 const { currentUser, groupConversation } = storeToRefs(chatStore)
 
 function getIsReverse(item) {
-  return item[0].from.id !== currentUser.value.id
+  return item[0].from.id === currentUser.value.id
+}
+
+function scrollToLastMessage() {
+  const nodes = document.querySelectorAll('.message-entry__wrapper .message-group')
+  nodes[nodes.length- 1].scrollIntoView({ behavior: 'smooth' });
 }
 
 onMounted(async () => {
   await fetchConversation()
   isFetching.value = false
+  nextTick(() => {
+    scrollToLastMessage()
+  })
 })
 
 </script>

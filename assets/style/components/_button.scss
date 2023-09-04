@@ -1,31 +1,24 @@
 // ==========  Button   ========== //
 
 .button {
-  min-width: 64px;
+  position: relative;
+  border-radius: 12px;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 16px 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 60px;
   text-decoration: none;
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
   outline: none;
-  background: var(--button-background);
-  color: var(--button-color);
-  //&::before,
-  //&::after {
-  //  position: absolute;
-  //  top: calc(50% - 100%);
-  //  left: calc(50% - 100%);
-  //  width: 200%;
-  //  height: 200%;
-  //  pointer-events: none;
-  //  content: " ";
-  //  background-color: rgb(0, 0, 0);
-  //  border-radius: 50%;
-  //  opacity: 0;
-  //  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  //  transition-property: opacity;
-  //  will-change: opacity;
-  //}
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
 
   &::before {
     border-radius: 4px;
@@ -98,7 +91,7 @@
 
   &[disabled].button--raised,
   &--loading.button--raised {
-    --button-color: var(--md-sys-disable);
-    --button-background: var(--md-sys-divider);
+    --button-color: var(--md-sys--color-disable);
+    --button-background: var(--md-sys--color-disable);
   }
 }

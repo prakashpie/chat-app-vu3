@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: true,
   modules: ['@vueuse/nuxt', '@pinia/nuxt'],
-  plugins: [{ src: '@/plugins/event-bus.ts', mode: 'client' }],
+  plugins: [],
   build: {},
   experimental: {
     viewTransition: false,

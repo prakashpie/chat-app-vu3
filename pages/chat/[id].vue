@@ -63,14 +63,18 @@ onMounted(async () => {
   }
 })
 
+function scrollToLastMessage() {
+  const nodes = document.querySelectorAll('.message-entry__wrapper .message-group')
+  nodes[nodes.length- 1].scrollIntoView({ behavior: 'smooth' });
+}
+
 function sendReply(e: any) {
   if(!message.value) {
     return
   }
   sendMsg(message.value)
   nextTick(() => {
-    const nodes = document.querySelectorAll('.message-entry__wrapper .message-group')
-    nodes[nodes.length- 1].scrollIntoView({ behavior: 'smooth' });
+    scrollToLastMessage()
   })
   message.value = ''
 }
