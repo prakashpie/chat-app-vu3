@@ -1,0 +1,22 @@
+// ==========  Root  ========== //
+
+:root {
+  // Link color
+  --link-decoration: none;
+
+  // Gutter
+  --grid-gutter: #{$gutter-default};
+  --grid-gutter-negative: #{get-negative($gutter-default)};
+  --container-box-width: 1248px;
+
+  // base
+  @each $key in map-keys($base) {
+    $map: map-get($base, $key);
+
+    @if $map {
+      $values: map-get($map, 'values');
+
+      @include map-variables($values, $key);
+    }
+  }
+}

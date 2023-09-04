@@ -1,0 +1,110 @@
+// ==========  Container  ========== //
+$cdnURL: '';
+
+$gutters: (
+  1: 16,
+  2: 24,
+  3: 32,
+  4: 48,
+);
+$gutter-default: 24px;
+$grid-desktop-columns: 12 !default;
+
+$color-map: (
+        'transparent': rgba(0, 0, 0, 0),
+        'primary': #1664C0,
+        'on-primary': #eceff1,
+        'background': #f8f7fa,
+        'on-background': #1f1f1f,
+        'surface': #fff,
+        'on-surface': #1f1f1f,
+        'surface-variant': #f1f4fa,
+        'on-surface-variant': #646b7d,
+        'disabled': rgba(0, 0, 0, 0.54),
+        'tertiary': #373e53,
+        'blue': #1b2541,
+        'golden': #cda677,
+        'error': #9f041b,
+        'success': #28C76F,
+        'warning': #fa0,
+        'outline': rgba(0, 0, 0, 0.7),
+);
+
+@function get-color-variables() {
+  $modified-map: ();
+  @each $key, $value in $color-map {
+    $modified-value: var(--md-sys-color-#{$key});
+    $modified-map: map-merge(
+                    $modified-map,
+                    (
+                            $key: $modified-value,
+                    )
+    );
+  }
+  @return $modified-map;
+}
+
+@function get-color-map() {
+  $modified-map: ();
+  @each $key, $value in $color-map {
+    $modified-key: 'color-' + $key;
+    $modified-value: $value;
+    $modified-map: map-merge(
+                    map-remove($modified-map, $key),
+                    (
+                            $modified-key: $modified-value,
+                    )
+    );
+  }
+  @return $modified-map;
+}
+
+// ==========  Base  ========== //
+$base: (
+  'base': (
+    values: (
+      'body-font': "'Montserrat', sans-serif",
+      'heading-font': "'Montserrat', sans-serif",
+      'font-size': 15px,
+      'paragraph-margin-top': 0,
+      'paragraph-margin-bottom': 1rem,
+      'heading-margin-top': 0,
+      'heading-margin-bottom': 1rem,
+      'font-weight': 400,
+      'line-height': 1.25,
+    ),
+  ),
+  'md-sys': (
+    values: get-color-map(),
+  ),
+  'breakpoint': (
+    values: (
+      'xs': 0,
+      'sm': 640px,
+      'md': 960px,
+    ),
+  ),
+  'gutter': (
+    values: (
+      1: 16,
+      2: 24,
+      3: 32,
+      4: 48,
+    ),
+  ),
+);
+
+// ==========  Config  ========== //
+$padding-map: (
+  0: 0,
+  4: 4px,
+  8: 8px,
+  12: 12px,
+  16: 16px,
+  24: 24px,
+  32: 32px,
+  40: 40px,
+  48: 48px
+);
+
+$margin-map: (auto: auto, 0: 0, 2:2px, 4: 4px, 8: 8px, 12: 12px, 16: 16px, 24: 24px, 32: 2rem);

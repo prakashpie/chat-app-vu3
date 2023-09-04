@@ -1,0 +1,33 @@
+// Layout
+html {
+  height: 100%;
+  // overflow: hidden;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+  height: 100%;
+}
+#__nuxt,
+.layout-app {
+  position: relative;
+  height: 100%;
+}
+
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  height: 100%;
+}
+.layout-main {
+  flex-direction: row;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}

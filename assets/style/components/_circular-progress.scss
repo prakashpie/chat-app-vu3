@@ -1,0 +1,63 @@
+:root {
+  --circular-stroke-color: var(--md-sys-color-primary)
+}
+
+// ==========  Circular Progress   ========== //
+
+.circular-progress {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  transition: all 250ms linear;
+  will-change: opacity;
+
+  &__path {
+    stroke-dasharray: 80px, 200px;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    stroke: var(--circular-stroke-color);
+    transition: all 250ms linear;
+  }
+
+  &--primary {
+    .circular-progress__path {
+      --circular-stroke-color: var(--md-sys-color-primary)
+    }
+  }
+
+  &--closed {
+    opacity: 0;
+  }
+
+  &--indeterminate {
+    animation: circular-progress-rotate 1.4s linear infinite;
+
+    .circular-progress__path {
+      animation: circular-progress-dash 1.4s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes circular-progress-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes circular-progress-dash {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
+  }
+}

@@ -1,0 +1,102 @@
+@use "sass:math";
+
+// ==========  Mixins  ========== //
+
+// Flex Layout
+@mixin flex-layout($size, $max-columns) {
+  flex: 0 0 #{(math.div($size, $max-columns) * 100) + "%"};
+  max-width: #{(math.div($size, $max-columns) * 100) + "%"};
+}
+
+@mixin offset-size($size, $columns) {
+  margin-left: #{(math.div($size, $columns) * 100) + "%"};
+}
+
+@mixin flex-offset-size($size, $columns) {
+  margin-left: #{(math.div($size, $columns) * 100) + "%"};
+}
+
+@mixin full-flex {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+@mixin flex-layout($size, $max-columns) {
+  flex: 0 0 #{(math.div($size, $max-columns) * 100) + "%"};
+  max-width: #{(math.div($size, $max-columns) * 100) + "%"};
+}
+
+@mixin map-variables($values, $key) {
+  @each $name, $value in $values {
+    --#{$key}-#{$name}: #{$value};
+  }
+}
+
+// Button
+@mixin button-variant($color) {
+  --button-color: var(--color-#{$color});
+  --button-background-hover: var(--color-#{$color});
+
+  &.button--raised:not(:disabled),
+  &.button--unelevated:not(:disabled) {
+    --button-background-hover: var(--color-#{$color}-contrast);
+    --button-color: var(--color-#{$color}-contrast);
+    --button-background: var(--color-#{$color});
+  }
+}
+
+// Chips
+@mixin chip-variant($color) {
+  --button-background-hover: var(--color-#{$color});
+  --button-color: var(--color-#{$color});
+}
+
+// Fab Button
+@mixin fab-variant($color) {
+  --fab-background-hover: var(--color-#{$color}-contrast);
+  --fab-color: var(--color-#{$color}-contrast);
+  --fab-background: var(--color-#{$color});
+}
+
+// Icon Button
+@mixin icon-button-variant($color) {
+  --icon-button-background-hover: var(--color-#{$color}-contrast);
+  --icon-button-color: var(--color-#{$color});
+}
+
+// Badge
+@mixin badge-variant($color) {
+  color: var(--color-#{$color}-contrast);
+  background-color: var(--color-#{$color});
+}
+
+// Checkbox
+@mixin checkbox-variant($color) {
+  --checkbox-theme: var(--color-#{$color});
+  --checkbox-theme-contrast: var(--color-#{$color}-contrast);
+}
+
+// Chips
+@mixin chip-variant($color) {
+  color: var(--color-#{$color}-contrast);
+  background-color: var(--color-#{$color});
+}
+
+// Switch
+@mixin switch-variant($color) {
+  --switch-theme: var(--color-#{$color});
+  --switch-theme-contrast: var(--color-#{$color}-contrast);
+}
+
+// Snackbar
+@mixin snackbar-variant($color) {
+  --snackbar-text-color: var(--color-#{$color});
+  --snackbar-bg-color: var(--color-#{$color}-contrast);
+}
+
+// Radio
+@mixin radio-variant($color) {
+  --radio-theme: var(--color-#{$color});
+  --radio-theme-contrast: var(--color-#{$color}-contrast);
+}

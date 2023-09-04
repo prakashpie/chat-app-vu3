@@ -1,0 +1,73 @@
+@use "sass:math";
+
+// ==========  Flex Container  ========== //
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $name, $value in $gutters {
+      .#{$infix}gutter-#{$name} {
+        --grid-gutter: #{math.div($value, 2)}px;
+        --grid-gutter-negative: -#{math.div($value, 2)}px;
+      }
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--grid-gutter);
+  padding-left: var(--grid-gutter);
+
+  &--box {
+    max-width: var(--container-box-width);
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-right: var(--grid-gutter-negative);
+  margin-left: var(--grid-gutter-negative);
+}
+
+.col-break {
+  width: 100% !important;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  min-height: 1px;
+  padding-right: var(--grid-gutter);
+  padding-left: var(--grid-gutter);
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @for $i from 1 through $grid-columns {
+      .#{$infix}col--#{$i} {
+        @include flex-layout($i, $grid-columns);
+      }
+    }
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @for $i from 1 through $grid-columns {
+      .#{$infix}col--offset-#{$i} {
+        @include flex-offset-size($i, $grid-desktop-columns);
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+// ========== Icon Button   ========== //
+
+.icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  outline: none;
+  will-change: box-shadow, background;
+  transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  fill: currentColor;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: calc(50% - 100%);
+    left: calc(50% - 100%);
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    content: ' ';
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 50%;
+    opacity: 0;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: opacity;
+    will-change: opacity;
+  }
+
+  &::before {
+    border-radius: inherit;
+    transition-duration: 500ms;
+    transition-property: transform, opacity;
+    transform: scale(0);
+    will-change: transform, opacity;
+  }
+
+  &::after {
+    transition-duration: 150ms;
+  }
+
+  &--active::before,
+  &:hover::before,
+  &:active::before,
+  &:focus::before {
+    opacity: 0.06;
+    transform: none;
+  }
+
+  &:active::after {
+    opacity: 0.06;
+  }
+
+  // Child
+  &__icon {
+    display: inline-block;
+    color: inherit;
+    vertical-align: top;
+    user-select: none;
+
+    &--on {
+      display: none;
+    }
+  }
+
+  // Modifiers
+  &--on {
+    .icon-button__icon {
+      display: none;
+    }
+
+    .icon-button__icon--on {
+      display: inline-block;
+    }
+  }
+
+  &[disabled] {
+    --icon-button-color: var(--md-sys-color-disable);
+
+    pointer-events: none;
+    cursor: default;
+
+    &::after,
+    &::before {
+      display: none;
+    }
+  }
+}

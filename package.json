@@ -1,0 +1,35 @@
+{
+  "name": "@fs6/app",
+  "private": false,
+  "scripts": {
+    "build": "nuxt build",
+    "css": "gulp css",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^0.8.2",
+    "@types/node": "^18.16.18",
+    "cross-fetch": "^3.1.6",
+    "gulp": "^4.0.2",
+    "gulp-dart-sass": "^1.1.0",
+    "gulp-notify": "^4.0.0",
+    "gulp-util": "^3.0.8",
+    "nuxt": "^3.7.0",
+    "prettier": "^2.8.8",
+    "sass": "^1.66.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "@vueuse/core": "^10.4.1",
+    "@vueuse/nuxt": "^10.4.1",
+    "mitt": "^3.0.1",
+    "nuxi": "^3.7.3",
+    "pinia": "^2.1.6",
+    "swiper": "^10.2.0"
+  }
+}

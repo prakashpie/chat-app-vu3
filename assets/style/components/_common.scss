@@ -1,0 +1,46 @@
+p {
+  margin-bottom: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+.text-gradiant-clip {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.no-scrolled {
+  overflow: hidden;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  aspect-ratio: auto;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.elevation-1 {
+  box-shadow: 0 2px 4px rgba(47, 43, 61, 0.12), 0 0 transparent, 0 0 transparent;
+}
+
+.text-success {
+  color: var(--md-sys-color-success);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-disabled {
+  color: var(--md-sys-color-disabled);
+}

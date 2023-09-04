@@ -1,0 +1,148 @@
+// Container
+@function get-negative($value) {
+  @if $value == 0 {
+    @return $value;
+  }
+
+  @if $value == '0px' {
+    @return $value;
+  }
+
+  @return -$value;
+}
+
+// helper function
+@function convert-empty-list-to-map($source) {
+  @if (type-of($source) == list and length($source) == 0) {
+    @return map-remove(
+      (
+        x: x,
+      ),
+      x
+    );
+  }
+
+  @return $source;
+}
+
+// recursive map function
+@function recursive-map-merge($source1, $source2) {
+  @if (
+      type-of($source1) ==
+        map or
+        (type-of($source1) == list and length($source1) == 0)
+    ) and
+    (
+      type-of($source2) ==
+        map or
+        (type-of($source2) == list and length($source2) == 0)
+    )
+  {
+    // Check both maps and convert to [map] when empty
+    $map1: convert-empty-list-to-map($source1);
+    $map2: convert-empty-list-to-map($source2);
+
+    $result: $map1;
+
+    @each $key, $value in $map2 {
+      // Check both childs and convert to map when empty
+      $map1-child: convert-empty-list-to-map(map-get($map1, $key));
+      $map2-child: convert-empty-list-to-map($value);
+
+      @if (type-of($map1-child) == map and type-of($map2-child) == map) {
+        $result: map-merge(
+          $result,
+          (
+            $key: recursive-map-merge($map1-child, $map2-child),
+          )
+        );
+      } @else {
+        $result: map-merge(
+          $result,
+          (
+            $key: $value,
+          )
+        );
+      }
+    }
+
+    @return $result;
+  } @else {
+    @warn "recursive-map-merge() expects it\'s parameters to be map types!";
+
+    @return null;
+  }
+}
+
+// return css color variable with different opacity value
+@function alpha-color($key, $opacity) {
+  $color: map-get($base, 'color');
+  $color: map-get($color, 'values');
+  $color: map-get($color, $key);
+
+  @return rgba($color, $opacity);
+}
+
+// replace substring with another string
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+
+$grid-columns: 12 !default;
+
+$grid-breakpoints: (xs: 0, sm: 640px, md: 960px, lg: 1280px) !default;
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+
+  @return if($min != 0, $min, null);
+}
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "#{$name}\\:");
+}
+
+@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+  $max: map-get($breakpoints, $name);
+
+  @return if($max and $max > 0, $max - 0.02, null);
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+  $max: breakpoint-max($name, $breakpoints);
+
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  }
+
+  @else {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+
+  @else {
+    @content;
+  }
+}
